@@ -15,6 +15,7 @@
 
     // For the console
     window.camera = camera
+    window.scene = scene
 
     onSetup(scene, camera)
     animate()

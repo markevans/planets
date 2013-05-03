@@ -2,24 +2,41 @@
 <html>
   <head>
     <title>3D Experiments</title>
+    <link rel="stylesheet" href="css/master.css" type="text/css" media="screen" charset="utf-8">
     <script src="js/three.min.js"></script>
+    <script src="js/planet.js"></script>
     <script src="js/setup.js"></script>
   </head>
   <body>
     <script>
+
+      function sphere (pos, radius, colour) {
+        if (!radius) radius = 50
+        var sphere = new THREE.Mesh(
+          new THREE.SphereGeometry(radius, 16, 16),
+          new THREE.MeshLambertMaterial({color: colour})
+        )
+        sphere.position.x = pos[0]
+        sphere.position.y = pos[1]
+        sphere.position.z = pos[2]
+        return sphere
+      }
+
       setup(
         function onSetup (scene, camera) {
-          camera.position.z = 1000;
+          camera.position.z = 2000
 
-          var geometry = new THREE.CubeGeometry( 200, 200, 200 )
-          var material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true } )
+          scene.add(new THREE.AxisHelper(10000))
 
-          mesh = new THREE.Mesh( geometry, material )
-          scene.add( mesh )
+          scene.add(new THREE.HemisphereLight( 0xffffff, 0x777777, 1 ))
+
+          var sun = new Planet(1000, [0,0,0], [0,0,0])
+
+          scene.add(sphere(sun.position, sun.radius, 0xddffff))
         },
+
         function onDraw (scene, camera) {
-          mesh.rotation.x += 0.01;
-          mesh.rotation.y += 0.02
+          // floor.rotation.z += 0.01
         }
       )
 
