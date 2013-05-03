@@ -1,7 +1,5 @@
 define(['onion/struct'], function (Struct) {
 
-  var planets = {}
-
   return Struct.sub('Planet')
 
     .attributes('name', 'mass', 'position', 'velocity')
@@ -12,7 +10,7 @@ define(['onion/struct'], function (Struct) {
         position: [0,0,0],
         velocity: [0,0,0]
       })
-      planets[this.name()] = this
+      this.constructor.planets[this.name()] = this
     })
 
     .proto({
@@ -23,9 +21,7 @@ define(['onion/struct'], function (Struct) {
 
     .extend({
 
-      get: function (name) {
-        return planets[name]
-      }
+      planets: {}
 
     })
 })
