@@ -1,26 +1,27 @@
-define(['onion/type'], function (Type) {
+define(['onion/struct'], function (Struct) {
 
   var planets = {}
 
-  return Type.sub('Planet')
+  return Struct.sub('Planet')
+
+    .attributes('name', 'mass', 'position', 'velocity')
+
+    .after('init', function () {
+      this.setDefaults({
+        mass: 100,
+        position: [0,0,0],
+        velocity: [0,0,0]
+      })
+      planets[this.name()] = this
+    })
 
     .proto({
-      init: function (name, mass, position, velocity) {
-        this.name = name
-        this.mass = mass || 100
-        this.position = position || [0,0,0]
-        this.velocity = velocity || [0,0,0]
-
-        this.radius = Math.sqrt(mass)
+      radius: function () {
+        return Math.sqrt(this.mass())
       }
     })
 
     .extend({
-      create: function (name, m, p, v) {
-        var planet = new this(name, m, p, v)
-        planets[name] = planet
-        return planet
-      },
 
       get: function (name) {
         return planets[name]
