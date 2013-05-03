@@ -5,50 +5,49 @@
     <link rel="stylesheet" href="css/master.css" type="text/css" media="screen" charset="utf-8">
     <script src="js/vendor/three.min.js"></script>
     <script type="text/javascript" charset="utf-8">
-      var require = {
-        baseUrl: 'js'
-      }
+      var require = {baseUrl: 'js'}
     </script>
     <script src="js/vendor/require.js"></script>
   </head>
   <body>
     <script>
-      require(['setup', 'lib/planet'], function (setup, Planet){
-        window.planets = Planet.planets
-
-        function sphere (pos, radius, colour) {
-          if (!radius) radius = 50
-          var sphere = new THREE.Mesh(
-            new THREE.SphereGeometry(radius, 16, 16),
-            new THREE.MeshLambertMaterial({color: colour})
-          )
-          sphere.position.x = pos[0]
-          sphere.position.y = pos[1]
-          sphere.position.z = pos[2]
-          return sphere
-        }
-
-        function addPlanetToScene (planet, scene) {
-          scene.add(sphere(planet.position(), planet.radius()))
-        }
-
-        setup(
-          function onSetup (scene, camera) {
-            camera.position.z = 2000
-
-            scene.add(new THREE.AxisHelper(10000))
-
-            scene.add(new THREE.HemisphereLight( 0xffffff, 0x777777, 1 ))
-
-            var sun = new Planet({name: 'sun', mass: 1000})
-            addPlanetToScene(sun, scene)
-          },
-
-          function onDraw (scene, camera) {
-
-          }
-        )
+      require(['app/app_controller'], function (AppController){
+        window.app = new AppController()
       })
+        // window.planets = Planet.planets
+        // 
+        // function sphere (pos, radius, colour) {
+        //   if (!radius) radius = 50
+        //   var sphere = new THREE.Mesh(
+        //     new THREE.SphereGeometry(radius, 16, 16),
+        //     new THREE.MeshLambertMaterial({color: colour})
+        //   )
+        //   sphere.position.x = pos[0]
+        //   sphere.position.y = pos[1]
+        //   sphere.position.z = pos[2]
+        //   return sphere
+        // }
+        // 
+        // function addPlanetToScene (planet, scene) {
+        //   scene.add(sphere(planet.position(), planet.radius()))
+        // }
+        // 
+        // setup(
+        //   function onSetup (scene, camera) {
+        //     camera.position.z = 2000
+        // 
+        //     scene.add(new THREE.AxisHelper(10000))
+        // 
+        //     scene.add(new THREE.HemisphereLight( 0xffffff, 0x777777, 1 ))
+        // 
+        //     var sun = new Planet({name: 'sun', mass: 1000})
+        //     addPlanetToScene(sun, scene)
+        //   },
+        // 
+        //   function onDraw (scene, camera) {
+        // 
+        //   }
+        // )
     </script>
 
   </body>
