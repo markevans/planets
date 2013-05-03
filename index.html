@@ -3,43 +3,50 @@
   <head>
     <title>3D Experiments</title>
     <link rel="stylesheet" href="css/master.css" type="text/css" media="screen" charset="utf-8">
-    <script src="js/three.min.js"></script>
-    <script src="js/planet.js"></script>
-    <script src="js/setup.js"></script>
+    <script src="js/vendor/three.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      var require = {
+        baseUrl: 'js'
+      }
+    </script>
+    <script src="js/vendor/require.js"></script>
   </head>
   <body>
     <script>
-
-      function sphere (pos, radius, colour) {
-        if (!radius) radius = 50
-        var sphere = new THREE.Mesh(
-          new THREE.SphereGeometry(radius, 16, 16),
-          new THREE.MeshLambertMaterial({color: colour})
-        )
-        sphere.position.x = pos[0]
-        sphere.position.y = pos[1]
-        sphere.position.z = pos[2]
-        return sphere
-      }
-
-      setup(
-        function onSetup (scene, camera) {
-          camera.position.z = 2000
-
-          scene.add(new THREE.AxisHelper(10000))
-
-          scene.add(new THREE.HemisphereLight( 0xffffff, 0x777777, 1 ))
-
-          var sun = new Planet(1000, [0,0,0], [0,0,0])
-
-          scene.add(sphere(sun.position, sun.radius, 0xddffff))
-        },
-
-        function onDraw (scene, camera) {
-          // floor.rotation.z += 0.01
+      require(['setup', 'lib/planet'], function (setup, Planet){
+        function sphere (pos, radius, colour) {
+          if (!radius) radius = 50
+          var sphere = new THREE.Mesh(
+            new THREE.SphereGeometry(radius, 16, 16),
+            new THREE.MeshLambertMaterial({color: colour})
+          )
+          sphere.position.x = pos[0]
+          sphere.position.y = pos[1]
+          sphere.position.z = pos[2]
+          return sphere
         }
-      )
-
+      
+        function addPlanetToScene (planet, scene) {
+          scene.add(sphere(planet.position, planet.radius))
+        }
+      
+        setup(
+          function onSetup (scene, camera) {
+            camera.position.z = 2000
+      
+            scene.add(new THREE.AxisHelper(10000))
+      
+            scene.add(new THREE.HemisphereLight( 0xffffff, 0x777777, 1 ))
+      
+            var sun = Planet.create('sun', 1000, [0,0,0], [0,0,0])
+            addPlanetToScene(sun, scene)
+          },
+      
+          function onDraw (scene, camera) {
+          
+          }
+        )
+      })
     </script>
 
   </body>

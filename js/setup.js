@@ -1,5 +1,5 @@
-(function () {
-  window.setup = function (onSetup, onDraw) {
+define(function () {
+  return function (onSetup, onDraw) {
     var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 )
     var scene = new THREE.Scene()
     var renderer = new THREE.WebGLRenderer()
@@ -20,4 +20,4 @@
     onSetup(scene, camera)
     animate()
   }
-})()
+})
