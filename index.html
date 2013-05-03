@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>3D Experiments</title>
+    <script src="js/three.min.js"></script>
+    <script src="js/setup.js"></script>
+  </head>
+  <body>
+    <script>
+      setup(
+        function onSetup (scene, camera) {
+          camera.position.z = 1000;
+
+          var geometry = new THREE.CubeGeometry( 200, 200, 200 )
+          var material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true } )
+
+          mesh = new THREE.Mesh( geometry, material )
+          scene.add( mesh )
+        },
+        function onDraw (scene, camera) {
+          mesh.rotation.x += 0.01;
+          mesh.rotation.y += 0.02
+        }
+      )
+
+    </script>
+
+  </body>
+</html>
